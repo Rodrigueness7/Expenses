@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 
 }
 .itens{
@@ -9,6 +10,24 @@
     flex-direction: row;
     justify-content: space-between;
     border: 1px solid black;
-    width: 300px;
+    width: 450px;
+    padding: 10px;
+    position: relative;
+}
+
+.value{
+    position: absolute;
+    left: 180px;
+
+}
+.description{
+    max-width: 140px;
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    width: 460px;
     padding: 5px;
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 function Home() {
 
   const [data, setData] = useState([])
+  const [total, setTotal] = useState('')
 
   useEffect(() =>{
      fetch('http://localhost:3001/')
@@ -13,10 +14,19 @@ function Home() {
     })
   }, [])
 
+  const result = (e) => {
+    e.preventDefault()
+    data.filter(item => {
+      console.log(item.value)
+    })
+    
+  }
+
   return(
     <div className="card">
       <h1>Despesas</h1>
-      {data.map((itens) => <div className="itens"><span className="des">Conta: {itens.description}</span><span className="va">R$: {itens.value}</span></div> )}
+      <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
+      {data.map((itens) => <div className="itens"><span className="description"> {itens.description}</span><span className="value">R$: {itens.value}</span><span> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span></div> )}
     </div>
   )
 
