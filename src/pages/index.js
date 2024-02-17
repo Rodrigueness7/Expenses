@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 function Home() {
 
   const [data, setData] = useState([])
-  const [total, setTotal] = useState('')
+ 
 
   useEffect(() =>{
      fetch('http://localhost:3001/')
@@ -14,13 +14,6 @@ function Home() {
     })
   }, [])
 
-  const result = (e) => {
-    e.preventDefault()
-    data.filter(item => {
-      console.log(item.value)
-    })
-    
-  }
 
   return(
     <div className="card">
