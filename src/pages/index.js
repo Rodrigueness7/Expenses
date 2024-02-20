@@ -26,9 +26,10 @@ function Home() {
     <div className="card">
       <h1>Despesas</h1>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
-      {data.map((itens) => <div className="itens"><span className="description"> {itens.description}</span><span className="value">R$: {itens.value}</span><span> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span></div> )}
+      {data.map((itens) => <div className="itens"
+      key={itens.id}><span className="description"> {itens.description}</span><span className="value">R$: {itens.value}</span><span> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span></div> )}
       <div>
-        {sum.map(sum => <p>Total: R$: {sum['SUM(value)']}</p> )}
+        {sum.map(sum => <p key={0}>Total: R$: {sum['SUM(value)']}</p> )}
       </div>
     </div>
   )

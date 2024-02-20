@@ -28,8 +28,6 @@ function add() {
             dt_exp: date
         }
 
-        console.log(data)
-
         const response = await fetch('http://localhost:3001/add', {
             method: 'POST',
             body: JSON.stringify(data),
