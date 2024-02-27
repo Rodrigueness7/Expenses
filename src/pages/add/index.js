@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-function add() {
+function Add() {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [date, setDate] = useState('')
@@ -58,4 +58,4 @@ function add() {
     )
 }
 
-export default add;
+export default Add;
