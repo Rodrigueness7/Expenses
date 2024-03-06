@@ -35,10 +35,14 @@
 .button{
     position: absolute;
     left: 480px;
-    color: black;
     
-
 }
+
+.update{
+    text-decoration: none;
+    color:black
+}
+
 
 .title{
     display: flex;
