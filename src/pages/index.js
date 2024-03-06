@@ -20,6 +20,10 @@ function Home() {
       .then((res) => res.json())
       .then((total) => {
         setSum(total)
+        const z = total[0]['SUM(value)']
+        console.log(z.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}))
+       
+      
       })
   }, [])
 

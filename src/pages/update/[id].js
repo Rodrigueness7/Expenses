@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
@@ -19,7 +20,9 @@ const FormUpdate = ({ data }) => {
     const [updateValue, setUpdateValue] = useState(data[0].value)
     const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
-
+    const [removeItem, setRemoveItem] = useState('')
+    
+    
     const handleDescription = (e) => {
         setUpdateDescription(e.target.value)
     }
@@ -55,6 +58,16 @@ const FormUpdate = ({ data }) => {
         setUpdateResult(result)
     }
 
+    const remove = async (e) => {
+        const res = await fetch(`http://localhost:3001/remove/${routeId.query.id}`, {
+            method: 'DELETE'
+        })
+        const remove = await res.json()
+        setRemoveItem(remove.data)
+       
+
+    }
+
     return (
         <div>
             <h2>Atualizar dados</h2>
@@ -65,6 +78,8 @@ const FormUpdate = ({ data }) => {
                 <button type="submit">Atualizar</button>
                 <div>{updateResult.data}</div>
             </form>
+            <button onClick={remove}>Delete</button>
+            <div>{removeItem}</div>
         </div>
     )
 
