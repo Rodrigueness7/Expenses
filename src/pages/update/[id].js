@@ -7,19 +7,19 @@ export async function getServerSideProps(context) {
     const res = await fetch(`http://localhost:3001/find/${id}`)
     const data = await res.json()
 
-    return {props: {data}}
+    return { props: { data } }
 
 }
 
-const FormUpdate = ({data}) => {
+const FormUpdate = ({ data }) => {
 
     const routeId = useRouter()
-   
+
     const [updateDescription, setUpdateDescription] = useState(data[0].description)
     const [updateValue, setUpdateValue] = useState(data[0].value)
-    const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split( '/' ).reverse( ).join( '-' ))
+    const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
-   
+
     const handleDescription = (e) => {
         setUpdateDescription(e.target.value)
     }
@@ -30,9 +30,9 @@ const FormUpdate = ({data}) => {
 
     const handleDate = (e) => {
         setUpdateDate(e.target.value)
-       
+
     }
-    
+
     const onSubmit = async (e) => {
         e.preventDefault()
 
@@ -54,7 +54,7 @@ const FormUpdate = ({data}) => {
         const result = await res.json()
         setUpdateResult(result)
     }
-    
+
     return (
         <div>
             <h2>Atualizar dados</h2>

@@ -27,6 +27,19 @@
     max-width: 140px;
 }
 
+.date{
+    position: absolute;
+    left: 390px;
+}
+
+.button{
+    position: absolute;
+    left: 480px;
+    color: black;
+    
+
+}
+
 .title{
     display: flex;
     justify-content: space-between;
