@@ -29,12 +29,13 @@ function Home() {
 
   return (
     <div className="card">
+      <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
       {data.map((itens) => <div className="itens"
         key={itens.id}><span className="description"> {itens.description}</span><span className="value">R$: {itens.value}</span>
         <span className="date"> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span>
-        <button className="button"><Link className="update" href={`/update/${itens.id}`}>Atualizar</Link></button></div>)}
+       <Link className="update" href={`/update/${itens.id}`}><button className="button">{"<<"}</button></Link></div>)}
       <div>
         {sum.map(sum => <p key={0}>Total: R$: {sum['SUM(value)']}</p>)}
       </div>

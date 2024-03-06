@@ -51,3 +51,8 @@
     width: 460px;
     padding: 5px;
 }
+
+.adicionar{
+    display: flex;
+    justify-items: flex-end;
+}
