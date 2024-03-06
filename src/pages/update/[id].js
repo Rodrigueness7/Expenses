@@ -1,46 +1,69 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useRouter } from "next/router"
+import { useState } from "react"
 
-var initialDescription
-var initialValue
-var initialDate
+export async function getServerSideProps(context) {
 
-fetch('http://localhost:3001/find/59')
-    .then((res) => res.json())
-    .then((data) => {
-        initialDescription = data[0].description
-        initialValue = data[0].value
-        initialDate = new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join( '-' )
-    })
+    const id = context.params.id
+    const res = await fetch(`http://localhost:3001/find/${id}`)
+    const data = await res.json()
 
-const FormUpdate = () => {
+    return {props: {data}}
+
+}
+
+const FormUpdate = ({data}) => {
+
+    const routeId = useRouter()
    
-    const [description, setDescription] = useState(initialDescription)
-    const [value, setValue] = useState(initialValue)
-    const [date, setDate] = useState(initialDate)
+    const [updateDescription, setUpdateDescription] = useState(data[0].description)
+    const [updateValue, setUpdateValue] = useState(data[0].value)
+    const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split( '/' ).reverse( ).join( '-' ))
+    const [updateResult, setUpdateResult] = useState('')
    
     const handleDescription = (e) => {
-        setDescription(e.target.value)
+        setUpdateDescription(e.target.value)
     }
 
     const handleValue = (e) => {
-        setValue(e.target.value)
+        setUpdateValue(e.target.value)
     }
 
-    const hanldeDate = (e) => {
-        setDate(e.target.value)
-        console.log(e.target.value)
+    const handleDate = (e) => {
+        setUpdateDate(e.target.value)
+       
     }
     
+    const onSubmit = async (e) => {
+        e.preventDefault()
+
+        const updateData = {
+            id: routeId.query.id,
+            description: updateDescription,
+            value: JSON.parse(updateValue),
+            dt_exp: updateDate
+        }
+
+        const res = await fetch(`http://localhost:3001/update/${routeId.query.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updateData),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+        const result = await res.json()
+        setUpdateResult(result)
+    }
     
     return (
         <div>
             <h2>Atualizar dados</h2>
-            <form>
-                <input type="text" onChange={handleDescription} value={description} placeholder="Description"></input>
-                <input type="number" onChange={handleValue} value={value} placeholder="Value"></input>
-                <input type="date" onChange={hanldeDate} value={date}></input>
+            <form onSubmit={onSubmit}>
+                <input type="text" onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
+                <input type="number" onChange={handleValue} value={updateValue} placeholder="Value"></input>
+                <input type="date" onChange={handleDate} value={updateDate}></input>
                 <button type="submit">Atualizar</button>
+                <div>{updateResult.data}</div>
             </form>
         </div>
     )

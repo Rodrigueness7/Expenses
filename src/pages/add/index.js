@@ -7,7 +7,7 @@ function Add() {
     const [date, setDate] = useState('')
     const [result, setResult] = useState('')
 
-    const handleDescriptio = (e) => {
+    const handleDescription = (e) => {
         setDescription( e.target.value)
     }
 
@@ -47,7 +47,7 @@ function Add() {
        <div>
              <h1>Add itens</h1>
              <form onSubmit={onSubmit}>
-                <input type="text" name="description" onChange={handleDescriptio} placeholder="Description" value={description} required></input>
+                <input type="text" name="description" onChange={handleDescription} placeholder="Description" value={description} required></input>
                 <input type="number" min='0' step='0.01' name="value" onChange={handleVelue} placeholder="Value" value={value} required ></input>
                 <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <button type='submit'>Add</button>
