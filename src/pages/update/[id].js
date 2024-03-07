@@ -20,8 +20,8 @@ const FormUpdate = ({ data }) => {
     const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
     const [removeItem, setRemoveItem] = useState('')
-    
-    
+
+
     const handleDescription = (e) => {
         setUpdateDescription(e.target.value)
     }
@@ -63,8 +63,14 @@ const FormUpdate = ({ data }) => {
         })
         const remove = await res.json()
         setRemoveItem(remove.data)
-       
 
+
+    }
+
+    const paid = (e) => {
+        return (
+            <input type="date"></input>
+        )
     }
 
     return (
@@ -77,8 +83,12 @@ const FormUpdate = ({ data }) => {
                 <button type="submit">Atualizar</button>
                 <div>{updateResult.data}</div>
             </form>
-            <button onClick={remove}>Delete</button>
+            <button onClick={remove}>Deletar</button>
             <div>{removeItem}</div>
+            <form>
+                <input type="date"></input>
+                <button onClick={paid} >Pago</button>
+            </form>
         </div>
     )
 

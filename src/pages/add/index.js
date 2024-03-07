@@ -8,7 +8,7 @@ function Add() {
     const [result, setResult] = useState('')
 
     const handleDescription = (e) => {
-        setDescription( e.target.value)
+        setDescription(e.target.value)
     }
 
     const handleVelue = (e) => {
@@ -16,7 +16,7 @@ function Add() {
     }
 
     const handleDate = (e) => {
-        setDate( e.target.value)
+        setDate(e.target.value)
     }
 
     async function onSubmit(event) {
@@ -42,19 +42,19 @@ function Add() {
         setValue('')
         setDate('')
     }
-    
-    return(
-       <div>
-             <h1>Adicionar dados</h1>
-             <form onSubmit={onSubmit}>
+
+    return (
+        <div>
+            <h1>Adicionar dados</h1>
+            <form onSubmit={onSubmit}>
                 <input type="text" name="description" onChange={handleDescription} placeholder="Description" value={description} required></input>
                 <input type="number" min='0' step='0.01' name="value" onChange={handleVelue} placeholder="Value" value={value} required ></input>
                 <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <button type='submit'>Add</button>
                 <div>{result.data}</div>
-             </form>
-       </div>
-        
+            </form>
+        </div>
+
     )
 }
 

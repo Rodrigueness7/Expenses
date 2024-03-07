@@ -37,7 +37,7 @@ function Home() {
         </div>)}
       <div>
         {sum.map(sum =>
-          <p key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}
+          <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}
       </div>
     </div>
   )
