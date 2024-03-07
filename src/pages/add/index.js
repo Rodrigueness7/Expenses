@@ -45,7 +45,7 @@ function Add() {
     
     return(
        <div>
-             <h1>Add itens</h1>
+             <h1>Adicionar dados</h1>
              <form onSubmit={onSubmit}>
                 <input type="text" name="description" onChange={handleDescription} placeholder="Description" value={description} required></input>
                 <input type="number" min='0' step='0.01' name="value" onChange={handleVelue} placeholder="Value" value={value} required ></input>

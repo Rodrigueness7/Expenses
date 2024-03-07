@@ -20,10 +20,6 @@ function Home() {
       .then((res) => res.json())
       .then((total) => {
         setSum(total)
-        const z = total[0]['SUM(value)']
-        console.log(z.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}))
-       
-      
       })
   }, [])
 
@@ -32,12 +28,16 @@ function Home() {
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
-      {data.map((itens) => <div className="itens"
-        key={itens.id}><span className="description"> {itens.description}</span><span className="value">R$: {itens.value}</span>
-        <span className="date"> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span>
-       <Link className="update" href={`/update/${itens.id}`}><button className="button">{"<<"}</button></Link></div>)}
+      {data.map((itens) =>
+        <div className="itens"
+          key={itens.id}><span className="description"> {itens.description}</span>
+          <span className="value">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(itens.value)}</span>
+          <span className="date"> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span>
+          <Link className="update" href={`/update/${itens.id}`}><button className="button">{"<<"}</button></Link>
+        </div>)}
       <div>
-        {sum.map(sum => <p key={0}>Total: R$: {sum['SUM(value)']}</p>)}
+        {sum.map(sum =>
+          <p key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}
       </div>
     </div>
   )
@@ -45,3 +45,5 @@ function Home() {
 }
 
 export default Home;
+
+
