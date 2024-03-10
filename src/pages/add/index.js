@@ -11,7 +11,7 @@ function Add() {
         setDescription(e.target.value)
     }
 
-    const handleVelue = (e) => {
+    const handleValue = (e) => {
         setValue(e.target.value)
     }
 
@@ -37,7 +37,10 @@ function Add() {
         });
 
         const result = await response.json();
-        setResult(result)
+        setResult(result.data)
+        setTimeout(() => {
+            setResult()
+        }, 3000)
         setDescription('')
         setValue('')
         setDate('')
@@ -48,10 +51,10 @@ function Add() {
             <h1>Adicionar dados</h1>
             <form onSubmit={onSubmit}>
                 <input type="text" name="description" onChange={handleDescription} placeholder="Description" value={description} required></input>
-                <input type="number" min='0' step='0.01' name="value" onChange={handleVelue} placeholder="Value" value={value} required ></input>
+                <input type="number" min='0' step='0.01' name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
                 <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <button type='submit'>Add</button>
-                <div>{result.data}</div>
+                <div>{result}</div>
             </form>
         </div>
 

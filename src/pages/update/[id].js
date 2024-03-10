@@ -65,7 +65,10 @@ const FormUpdate = ({ data }) => {
         });
 
         const result = await res.json()
-        setUpdateResult(result)
+        setUpdateResult(result.data)
+        setTimeout(()=>{
+            setUpdateResult()
+        }, 3000)
     }
 
     const remove = async (e) => {
@@ -74,6 +77,10 @@ const FormUpdate = ({ data }) => {
         })
         const remove = await res.json()
         setRemoveItem(remove.data)
+
+        setTimeout(() => {
+            setRemoveItem()
+        },3000)
 
 
     }
@@ -105,7 +112,10 @@ const FormUpdate = ({ data }) => {
         })
         const dataPaid = await res.json()
         setUpdateResultPaid(dataPaid.data)
-        console.log(updateResultPaid)
+        setTimeout(()=> {
+            setUpdateResultPaid()
+        },3000)
+       
     }
 
     return (
@@ -116,7 +126,7 @@ const FormUpdate = ({ data }) => {
                 <input type="number" onChange={handleValue} value={updateValue} placeholder="Value"></input>
                 <input type="date" onChange={handleDate} value={updateDate}></input>
                 <button type="submit">Atualizar</button>
-                <div>{updateResult.data}</div>
+                <div>{updateResult}</div>
             </form>
             <button onClick={remove}>Deletar</button>
             <div>{removeItem}</div>
