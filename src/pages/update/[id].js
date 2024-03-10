@@ -20,7 +20,13 @@ const FormUpdate = ({ data }) => {
     const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
     const [removeItem, setRemoveItem] = useState('')
-
+    const [updatePaid, setUpdatePaid] = useState(()=> {
+        if(data[0].dt_paid == null) {
+            return null
+        }
+        return new Date(data[0].dt_paid).toLocaleDateString('pt-br').split('/').reverse().join('-')
+    })
+    const [updateResultPaid, setUpdateResultPaid] = useState('')
 
     const handleDescription = (e) => {
         setUpdateDescription(e.target.value)
@@ -33,6 +39,11 @@ const FormUpdate = ({ data }) => {
     const handleDate = (e) => {
         setUpdateDate(e.target.value)
 
+    }
+
+    const handlePayment = (e) => {
+        setUpdatePaid(e.target.value)
+       
     }
 
     const onSubmit = async (e) => {
@@ -67,10 +78,34 @@ const FormUpdate = ({ data }) => {
 
     }
 
-    const paid = (e) => {
-        return (
-            <input type="date"></input>
-        )
+    const paid = async (e) => {
+        e.preventDefault()
+
+     const payment = () => {
+        if(updatePaid == ''){
+            return null
+        }
+        return updatePaid
+     }
+
+        const updateData = {
+            id: routeId.query.id,
+            description: updateDescription,
+            value: JSON.parse(updateValue),
+            dt_exp: updateDate,
+            dt_paid: payment()
+        }
+        
+        const res = await fetch(`http://localhost:3001/updatePaid/${routeId.query.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updateData),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+        const dataPaid = await res.json()
+        setUpdateResultPaid(dataPaid.data)
+        console.log(updateResultPaid)
     }
 
     return (
@@ -85,9 +120,10 @@ const FormUpdate = ({ data }) => {
             </form>
             <button onClick={remove}>Deletar</button>
             <div>{removeItem}</div>
-            <form>
-                <input type="date"></input>
-                <button onClick={paid} >Pago</button>
+            <form onSubmit={paid}>
+                <input type="date" onChange={handlePayment} value={updatePaid}></input>
+                <button type="submit" >Pago</button>
+                <div>{updateResultPaid}</div>
             </form>
         </div>
     )

@@ -29,11 +29,11 @@ function Home() {
       <h1>Despesas</h1>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
       {data.map((itens) =>
-        <div className="itens"
+        <div className="itens" 
           key={itens.id}><span className="description"> {itens.description}</span>
           <span className="value">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(itens.value)}</span>
           <span className="date"> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span>
-          <Link className="update" href={`/update/${itens.id}`}><button className="button">{"<<"}</button></Link>
+          <Link className="update" href={`/update/${itens.id}`}><button className="button">...</button></Link>
         </div>)}
       <div>
         {sum.map(sum =>
