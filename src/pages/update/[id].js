@@ -42,6 +42,7 @@ const FormUpdate = ({ data }) => {
     }
 
     const handlePayment = (e) => {
+
         setUpdatePaid(e.target.value)
 
     }
@@ -108,8 +109,8 @@ const FormUpdate = ({ data }) => {
         <div>
             <h2>Atualizar dados</h2>
             <form onSubmit={onSubmit}>
-                <input type="text" onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
-                <input type="number" onChange={handleValue} value={updateValue} placeholder="Value"></input>
+                <input type="text" maxLength={50} onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
+                <input type="number" min={0} max={999000000} onChange={handleValue} value={updateValue} placeholder="Value"></input>
                 <input type="date" onChange={handleDate} value={updateDate}></input>
                 <input type="date" onChange={handlePayment} value={updatePaid}></input>
                 <button type="submit">Atualizar</button>
