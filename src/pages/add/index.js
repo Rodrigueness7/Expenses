@@ -8,14 +8,19 @@ function Add() {
     const [result, setResult] = useState('')
 
     const handleDescription = (e) => {
-         setDescription(e.target.value)
-      
+        setDescription(e.target.value)
+
     }
 
     const handleValue = (e) => {
-        
-        setValue(e.target.value.toLocaleString('pt-BR'))
-        
+
+        var changeValue = e.target.value;
+        changeValue = changeValue.replace(/\D/g, "");
+        changeValue  = changeValue.replace(/(\d+)(\d{2})$/, "$1,$2");
+        changeValue  = changeValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        e.target.value = changeValue ;
+
+        setValue(e.target.value)
     }
 
     const handleDate = (e) => {
@@ -25,11 +30,17 @@ function Add() {
     async function onSubmit(event) {
         event.preventDefault()
 
+        var newValue= value
+        newValue = newValue.replace(".", "")
+        newValue = newValue.replace(",", ".")
+        newValue = parseFloat(newValue)
+        
         const data = {
             description: description,
-            value: JSON.parse(value),
+            value: newValue,
             dt_exp: date
         }
+
 
         const response = await fetch('http://localhost:3001/add', {
             method: 'POST',
@@ -54,7 +65,7 @@ function Add() {
             <h1>Adicionar dados</h1>
             <form onSubmit={onSubmit}>
                 <input type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
-                <input type="number" min={0} max={999000000} step='0.01' name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
+                <input type="text" maxLength={14} name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
                 <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <button type='submit'>Add</button>
                 <div>{result}</div>
