@@ -16,9 +16,9 @@ function Add() {
 
         var changeValue = e.target.value;
         changeValue = changeValue.replace(/\D/g, "");
-        changeValue  = changeValue.replace(/(\d+)(\d{2})$/, "$1,$2");
-        changeValue  = changeValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-        e.target.value = changeValue ;
+        changeValue = changeValue.replace(/(\d+)(\d{2})$/, "$1,$2");
+        changeValue = changeValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        e.target.value = "R$ " + changeValue;
 
         setValue(e.target.value)
     }
@@ -30,17 +30,20 @@ function Add() {
     async function onSubmit(event) {
         event.preventDefault()
 
-        var newValue= value
+        var newValue = value
+        newValue = newValue.replace("R$", "")
         newValue = newValue.replace(".", "")
         newValue = newValue.replace(",", ".")
         newValue = parseFloat(newValue)
-        
+
+
         const data = {
             description: description,
             value: newValue,
             dt_exp: date
         }
 
+        
 
         const response = await fetch('http://localhost:3001/add', {
             method: 'POST',

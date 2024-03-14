@@ -16,7 +16,7 @@ const FormUpdate = ({ data }) => {
     const routeId = useRouter()
 
     const [updateDescription, setUpdateDescription] = useState(data[0].description)
-    const [updateValue, setUpdateValue] = useState(data[0].value)
+    const [updateValue, setUpdateValue] = useState(new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(data[0].value))
     const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
     const [removeItem, setRemoveItem] = useState('')
@@ -33,6 +33,13 @@ const FormUpdate = ({ data }) => {
     }
 
     const handleValue = (e) => {
+
+        var changeValueUpdate = e.target.value;
+        changeValueUpdate = changeValueUpdate.replace(/\D/g, "");
+        changeValueUpdate = changeValueUpdate.replace(/(\d+)(\d{2})$/, "$1,$2");
+        changeValueUpdate = changeValueUpdate.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        e.target.value = "R$ " + changeValueUpdate;
+
         setUpdateValue(e.target.value)
     }
 
@@ -48,19 +55,36 @@ const FormUpdate = ({ data }) => {
     }
 
     const onSubmit = async (e) => {
+
+
+        if(updatePaid < updateDate && updatePaid !== "" ){
+            return alert('Data de pagemento não pode ser inferior a data de vencimento')
+        } 
+
         e.preventDefault()
 
+        var newUpdateValue = updateValue
+        newUpdateValue = newUpdateValue.replace("R$", "")
+        newUpdateValue = newUpdateValue.replace(".", "")
+        newUpdateValue = newUpdateValue.replace(",", ".")
+        newUpdateValue = parseFloat(newUpdateValue)
+
+
         const payment = () => {
+
             if (updatePaid == '') {
                 return null
+            } else if (updatePaid >= updateDate) {
+                return updatePaid
             }
-            return updatePaid
+            return null
         }
+
 
         const updateData = {
             id: routeId.query.id,
             description: updateDescription,
-            value: JSON.parse(updateValue),
+            value: newUpdateValue,
             dt_exp: updateDate,
             dt_paid: payment()
         }
@@ -110,7 +134,7 @@ const FormUpdate = ({ data }) => {
             <h2>Atualizar dados</h2>
             <form onSubmit={onSubmit}>
                 <input type="text" maxLength={50} onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
-                <input type="number" min={0} max={999000000} onChange={handleValue} value={updateValue} placeholder="Value"></input>
+                <input type="text" maxLength={14} onChange={handleValue} value={updateValue} placeholder="Value"></input>
                 <input type="date" onChange={handleDate} value={updateDate}></input>
                 <input type="date" onChange={handlePayment} value={updatePaid}></input>
                 <button type="submit">Atualizar</button>
