@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 
@@ -131,6 +132,7 @@ const FormUpdate = ({ data }) => {
 
     return (
         <div>
+            <Link href={'../'}><button>Home</button></Link>
             <h2>Atualizar dados</h2>
             <form onSubmit={onSubmit}>
                 <input type="text" maxLength={50} onChange={handleDescription} value={updateDescription} placeholder="Description"></input>

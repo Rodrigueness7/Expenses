@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 
 
@@ -65,6 +66,7 @@ function Add() {
 
     return (
         <div>
+            <Link href={"./"}><button>Home</button></Link>    
             <h1>Adicionar dados</h1>
             <form onSubmit={onSubmit}>
                 <input type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
@@ -73,6 +75,7 @@ function Add() {
                 <button type='submit'>Add</button>
                 <div>{result}</div>
             </form>
+            
         </div>
 
     )
