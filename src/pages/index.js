@@ -5,10 +5,18 @@ export async function getServerSideProps() {
   const res = await fetch('http://localhost:3001/')
   const dataFetch = await res.json()
   var newData = []
+  var sum = []
+  var total = 0;
   for( let i = 0; i < (dataFetch.length/ dataFetch.length) * 4; i++) {
     newData.push(dataFetch[i])
+    sum.push(dataFetch[i].value)
   }
-  return {props: {newData}}
+  for(let i = 0; i < sum.length; i++) {
+      total += parseFloat(sum[i])
+       
+  }
+  
+  return {props: {newData, total}}
 }
 
 function Home(props) {
@@ -38,7 +46,7 @@ function Home(props) {
         )}
       <div>
         {sum.map(sum =>
-          <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}
+          <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(props.total)}</p>)}
       </div>
     
     </div>
