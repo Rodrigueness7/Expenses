@@ -34,7 +34,8 @@ function Home() {
           <span className="value">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(itens.value)}</span>
           <span className="date"> {new Date(itens.dt_exp).toLocaleDateString('pt-BR')}</span>
           <Link className="update" href={`/update/${itens.id}`}><button className="button">...</button></Link>
-        </div>)}
+        </div>
+        )}
       <div>
         {sum.map(sum =>
           <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}

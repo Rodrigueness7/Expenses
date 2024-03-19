@@ -6,6 +6,7 @@ function Add() {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [date, setDate] = useState('')
+    const [date_launch, setDateLaunch] = useState('')
     const [result, setResult] = useState('')
 
     const handleDescription = (e) => {
@@ -28,6 +29,10 @@ function Add() {
         setDate(e.target.value)
     }
 
+    const handleDateLaunch = (e) => {
+        setDateLaunch(e.target.value)
+    }
+
     async function onSubmit(event) {
         event.preventDefault()
 
@@ -41,7 +46,8 @@ function Add() {
         const data = {
             description: description,
             value: newValue,
-            dt_exp: date
+            dt_exp: date,
+            dt_launch: date_launch
         }
 
         
@@ -72,6 +78,7 @@ function Add() {
                 <input type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
                 <input type="text" maxLength={14} name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
                 <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
+                <input type="date" onChange={handleDateLaunch} name="dt_launch" value={date_launch} required></input>
                 <button type='submit'>Add</button>
                 <div>{result}</div>
             </form>
