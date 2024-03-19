@@ -1,19 +1,19 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+export async function getServerSideProps() {
+  const res = await fetch('http://localhost:3001/')
+  const dataFetch = await res.json()
+  var newData = []
+  for( let i = 0; i < (dataFetch.length/ dataFetch.length) * 4; i++) {
+    newData.push(dataFetch[i])
+  }
+  return {props: {newData}}
+}
 
-function Home() {
+function Home(props) {
 
-  const [data, setData] = useState([])
   const [sum, setSum] = useState([])
-
-  useEffect(() => {
-    fetch('http://localhost:3001/')
-      .then((res) => res.json())
-      .then((itens) => {
-        setData(itens)
-      })
-  }, [])
 
   useEffect(() => {
     fetch('http://localhost:3001/sum')
@@ -28,7 +28,7 @@ function Home() {
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
-      {data.map((itens) =>
+      {props.newData.map((itens) =>
         <div className="itens" 
           key={itens.id}><span className="description"> {itens.description}</span>
           <span className="value">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(itens.value)}</span>
@@ -40,6 +40,7 @@ function Home() {
         {sum.map(sum =>
           <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(sum['SUM(value)'])}</p>)}
       </div>
+    
     </div>
   )
 
