@@ -9,19 +9,20 @@ export async function getServerSideProps() {
   var date = new Date();
   var firstDay = new Date(date.getFullYear(), date.getMonth()).toLocaleDateString('en-CA').slice(0, 10)
   var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).toLocaleString('en-CA').slice(0, 10)
+  
 
   dataFetch.map((itens) => {
-    if (itens.dt_exp >= firstDay || itens.dt_expd <= lastDay) {
+    if (itens.dt_exp.slice(0,10) >= firstDay && itens.dt_exp.slice(0,10) <= lastDay) {
       newData.push(itens)
       total += parseFloat(itens.value)
     }
+
   })
 
-  return { props: { newData, total } }
+  return { props: { newData, total, firstDay, lastDay} }
 }
 
 function Home(props) {
-
   return (
     <div className="card">
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
