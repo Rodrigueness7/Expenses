@@ -46,8 +46,8 @@ function Add() {
         const data = {
             description: description,
             value: newValue,
-            dt_exp: date.slice(0,10),
-            dt_launch: date_launch.slice(0,10)
+            dt_exp: date,
+            dt_launch: date_launch
         }
 
         
