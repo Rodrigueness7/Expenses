@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import { useState } from "react";
 
 export async function getServerSideProps() {
   const res = await fetch('http://localhost:3001/')
@@ -9,26 +9,66 @@ export async function getServerSideProps() {
   var date = new Date();
   var firstDay = new Date(date.getFullYear(), date.getMonth()).toLocaleDateString('en-CA').slice(0, 10)
   var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).toLocaleString('en-CA').slice(0, 10)
-  
 
   dataFetch.map((itens) => {
-    if (itens.dt_exp.slice(0,10) >= firstDay && itens.dt_exp.slice(0,10) <= lastDay) {
+    if (itens.dt_exp.slice(0, 10) >= firstDay && itens.dt_exp.slice(0, 10) <= lastDay) {
       newData.push(itens)
       total += parseFloat(itens.value)
     }
-
   })
 
-  return { props: { newData, total, firstDay, lastDay} }
+  return { props: { newData, total, firstDay, lastDay } }
 }
 
 function Home(props) {
+
+  const [newUpdate, setNewUpdate] = useState(props.newData)
+  const [newTotal, setTotal] = useState(props.total)
+  const [dateInit, setDateInit] = useState('')
+  const [dateFinish, setDateFinish] = useState('')
+
+  const handleDateInit = (e) => {
+    setDateInit(e.target.value)
+  }
+  const handleDateFinish = (e) => {
+    setDateFinish(e.target.value)
+  }
+
+  async function onsubmit(e) {
+    e.preventDefault()
+    const data = {
+      dt_init: dateInit,
+      dt_final: dateFinish
+    }
+
+    const res = await fetch('http://localhost:3001/findByDate', {
+      method: 'GET',
+      body: data,
+      headers: {
+        'Content-type': 'application/json'
+    }
+    })
+    const resData = await res.json()
+    var newValue = 0
+    resData.map((updateData) => {
+      newValue += parseFloat(updateData.value)
+      setTotal(newValue)
+    })
+
+    setNewUpdate(resData)
+  }
+
   return (
     <div className="card">
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
+      <form onSubmit={onsubmit}>
+        <input type="date" onChange={handleDateInit}value={dateInit}></input>
+        <input type="date" onChange={handleDateFinish} value={dateFinish}></input>
+        <button type="submit">Todos</button>
+      </form>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
-      {props.newData.map((itens) =>
+      {newUpdate.map((itens) =>
         <div className="itens"
           key={itens.id}><span className="description"> {itens.description}</span>
           <span className="value">{new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(itens.value)}</span>
@@ -36,9 +76,9 @@ function Home(props) {
           <Link className="update" href={`/update/${itens.id}`}><button className="button">...</button></Link>
         </div>
       )}
-      <div>
-        <p className="" key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(props.total)}</p>
-      </div>
+      {<div>
+        <p key={0}>Total: {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(newTotal)}</p>
+      </div>}
     </div>
   )
 
