@@ -36,22 +36,20 @@ function Home(props) {
 
   async function onsubmit(e) {
     e.preventDefault()
-    const data = {
-      dt_init: dateInit,
-      dt_final: dateFinish
-    }
+    
 
-    const res = await fetch('http://localhost:3001/findByDate', {
-      method: 'GET',
-      body: data,
-      headers: {
-        'Content-type': 'application/json'
-    }
-    })
+    const res = await fetch(`http://localhost:3001/findByDate/${dateInit}/${dateFinish}`)
     const resData = await res.json()
     var newValue = 0
+    
+    console.log(resData == ![] )
+    if(resData == ![]) {
+      return alert('Não há dados nesse periodo')
+    }
+
     resData.map((updateData) => {
       newValue += parseFloat(updateData.value)
+      console.log(newValue)
       setTotal(newValue)
     })
 
@@ -65,7 +63,7 @@ function Home(props) {
       <form onSubmit={onsubmit}>
         <input type="date" onChange={handleDateInit}value={dateInit}></input>
         <input type="date" onChange={handleDateFinish} value={dateFinish}></input>
-        <button type="submit">Todos</button>
+        <button type="submit">Buscar</button>
       </form>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
       {newUpdate.map((itens) =>
