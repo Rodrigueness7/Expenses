@@ -36,20 +36,17 @@ function Home(props) {
 
   async function onsubmit(e) {
     e.preventDefault()
-    
 
     const res = await fetch(`http://localhost:3001/findByDate/${dateInit}/${dateFinish}`)
     const resData = await res.json()
     var newValue = 0
-    
-    console.log(resData == ![] )
-    if(resData == ![]) {
-      return alert('Não há dados nesse periodo')
+
+    if (resData == ![]) {
+      return alert('Não há dados nesse período')
     }
 
     resData.map((updateData) => {
       newValue += parseFloat(updateData.value)
-      console.log(newValue)
       setTotal(newValue)
     })
 
@@ -61,7 +58,7 @@ function Home(props) {
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
       <form onSubmit={onsubmit}>
-        <input type="date" onChange={handleDateInit}value={dateInit}></input>
+        <input type="date" onChange={handleDateInit} value={dateInit}></input>
         <input type="date" onChange={handleDateFinish} value={dateFinish}></input>
         <button type="submit">Buscar</button>
       </form>

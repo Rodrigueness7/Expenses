@@ -55,4 +55,56 @@
 .adicionar{
     display: flex;
     justify-items: flex-end;
+    text-align: none;
+
+}
+
+.input{
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 250px;
+    position: relative;
+}
+
+.update{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.buttonUpdate{
+    position: absolute;
+    left:150px;
+    top: 293px
+
+}
+
+.buttonRemover{
+    position: absolute;
+    top: 293px;
+    left: 250px
+    
+}
+
+.cardForm{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.resultUpdate {
+    align-self: center;
+    position: absolute;
+    top: 330px;
+    left: 195px;
 }

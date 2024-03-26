@@ -6,12 +6,11 @@ function Add() {
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
     const [date, setDate] = useState('')
-    const [date_launch, setDateLaunch] = useState('')
+    const [date_launch, setDateLaunch] = useState(new Date().toLocaleDateString('en-CA'))
     const [result, setResult] = useState('')
 
     const handleDescription = (e) => {
         setDescription(e.target.value)
-
     }
 
     const handleValue = (e) => {
@@ -77,8 +76,8 @@ function Add() {
             <form onSubmit={onSubmit}>
                 <input type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
                 <input type="text" maxLength={14} name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
-                <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <input type="date" onChange={handleDateLaunch} name="dt_launch" value={date_launch} required></input>
+                <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
                 <button type='submit'>Add</button>
                 <div>{result}</div>
             </form>

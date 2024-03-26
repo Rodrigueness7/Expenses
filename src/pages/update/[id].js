@@ -1,3 +1,4 @@
+import { redirect } from "next/dist/server/api-utils"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -20,6 +21,7 @@ const FormUpdate = ({ data }) => {
     const [updateValue, setUpdateValue] = useState(new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(data[0].value))
     const [updateDate, setUpdateDate] = useState(new Date(data[0].dt_exp).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [updateResult, setUpdateResult] = useState('')
+    const [updateDtLaunch, setUpdateDtLaunch] = useState(new Date(data[0].dt_launch).toLocaleDateString('pt-br').split('/').reverse().join('-'))
     const [removeItem, setRemoveItem] = useState('')
     const [updatePaid, setUpdatePaid] = useState(() => {
         if (data[0].dt_paid == null) {
@@ -44,9 +46,13 @@ const FormUpdate = ({ data }) => {
         setUpdateValue(e.target.value)
     }
 
-    const handleDate = (e) => {
+    const handleDtExp = (e) => {
         setUpdateDate(e.target.value)
 
+    }
+
+    const handleDtLaunch = (e) => {
+        setUpdateDtLaunch(e.target.value)
     }
 
     const handlePayment = (e) => {
@@ -58,9 +64,9 @@ const FormUpdate = ({ data }) => {
     const onSubmit = async (e) => {
 
 
-        if(updatePaid < updateDate && updatePaid !== "" ){
+        if (updatePaid < updateDate && updatePaid !== "") {
             return alert('Data de pagemento não pode ser inferior a data de vencimento')
-        } 
+        }
 
         e.preventDefault()
 
@@ -87,7 +93,8 @@ const FormUpdate = ({ data }) => {
             description: updateDescription,
             value: newUpdateValue,
             dt_exp: updateDate,
-            dt_paid: payment()
+            dt_paid: payment(),
+            dt_launch: updateDtLaunch
         }
 
         const res = await fetch(`http://localhost:3001/update/${routeId.query.id}`, {
@@ -125,25 +132,39 @@ const FormUpdate = ({ data }) => {
 
         setTimeout(() => {
             setRemoveItem()
+
         }, 3000)
 
-
+        window.location.replace('../')
     }
 
     return (
-        <div>
+        <div className="update">
             <Link href={'../'}><button>Home</button></Link>
-            <h2>Atualizar dados</h2>
-            <form onSubmit={onSubmit}>
-                <input type="text" maxLength={50} onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
-                <input type="text" maxLength={14} onChange={handleValue} value={updateValue} placeholder="Value"></input>
-                <input type="date" onChange={handleDate} value={updateDate}></input>
-                <input type="date" onChange={handlePayment} value={updatePaid}></input>
-                <button type="submit">Atualizar</button>
-                <div>{updateResult}</div>
-            </form>
-            <button onClick={remove}>Deletar</button>
-            <div>{removeItem}</div>
+            <h1>Atualizar dados</h1>
+            <div className="cardForm">
+                <form onSubmit={onSubmit} className="form">
+                    <label> Descrição:
+                        <input className="input" type="text" maxLength={50} onChange={handleDescription} value={updateDescription} placeholder="Description"></input>
+                    </label>
+                    <label>Valor:
+                        <input className="input" type="text" maxLength={14} onChange={handleValue} value={updateValue} placeholder="Value"></input>
+                    </label>
+                    <label>Lançamento:
+                        <input className="input" type="date" onChange={handleDtLaunch} value={updateDtLaunch} required></input>
+                    </label>
+                    <label>Vencimento:
+                        <input className="input" type="date" onChange={handleDtExp} value={updateDate} required ></input>
+                    </label>
+                    <label> Pagamento:
+                        <input className="input" type="date" onChange={handlePayment} value={updatePaid}></input>
+                    </label>
+                    <button className="buttonUpdate" type="submit">Atualizar</button>
+                </form>
+                <button className="buttonRemover" onClick={remove}>Deletar</button>
+                <span className="resultUpdate">{removeItem}</span>
+                <span className="resultUpdate">{updateResult}</span>
+            </div>
         </div>
     )
 
