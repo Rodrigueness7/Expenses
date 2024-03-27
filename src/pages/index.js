@@ -57,10 +57,14 @@ function Home(props) {
     <div className="card">
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas</h1>
-      <form onSubmit={onsubmit}>
-        <input type="date" onChange={handleDateInit} value={dateInit}></input>
-        <input type="date" onChange={handleDateFinish} value={dateFinish}></input>
-        <button type="submit">Buscar</button>
+      <form onSubmit={onsubmit} className="formPeriod">
+       <label><span className="titleForm">Dt Inicial:</span>
+       <input className="period" type="date" onChange={handleDateInit} value={dateInit}></input>
+       </label>
+        <label><span className="titleForm">Dt Final:</span>
+        <input className="period" type="date" onChange={handleDateFinish} value={dateFinish}></input>
+        </label>
+        <button className="buttonSearch" type="submit">Buscar</button>
       </form>
       <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
       {newUpdate.map((itens) =>

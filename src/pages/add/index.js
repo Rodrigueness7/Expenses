@@ -35,6 +35,10 @@ function Add() {
     async function onSubmit(event) {
         event.preventDefault()
 
+        if(date < date_launch) {    
+          return alert('Data lançamento não pode ser inferior a data vencimento')
+        }
+
         var newValue = value
         newValue = newValue.replace("R$", "")
         newValue = newValue.replace(".", "")
@@ -49,7 +53,7 @@ function Add() {
             dt_launch: date_launch
         }
 
-        
+
 
         const response = await fetch('http://localhost:3001/add', {
             method: 'POST',
@@ -70,18 +74,27 @@ function Add() {
     }
 
     return (
-        <div>
-            <Link href={"./"}><button>Home</button></Link>    
+        <div className="cardMain">
+            <Link href={"./"}><button>Home</button></Link>
             <h1>Adicionar dados</h1>
-            <form onSubmit={onSubmit}>
-                <input type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
-                <input type="text" maxLength={14} name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
-                <input type="date" onChange={handleDateLaunch} name="dt_launch" value={date_launch} required></input>
-                <input type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
-                <button type='submit'>Add</button>
-                <div>{result}</div>
-            </form>
-            
+            <div className="form">
+                <form onSubmit={onSubmit} >
+                    <label>Descrição
+                        <input className="input" type="text" name="description" maxLength={50} onChange={handleDescription} placeholder="Description" value={description} required></input>
+                    </label>
+                    <label>Valor:
+                        <input className="input" type="text" maxLength={14} name="value" onChange={handleValue} placeholder="Value" value={value} required ></input>
+                    </label>
+                    <label>Dt Lançamento:
+                        <input className="input" type="date" onChange={handleDateLaunch} name="dt_launch" value={date_launch} required></input>
+                    </label>
+                    <label>Dt Vencimento
+                        <input className="input" type="date" onChange={handleDate} name="dt_exp" value={date} required></input>
+                    </label>
+                    <button type='submit'>Enviar</button>
+                    <div>{result}</div>
+                </form>
+            </div>
         </div>
 
     )

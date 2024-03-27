@@ -64,8 +64,8 @@ const FormUpdate = ({ data }) => {
     const onSubmit = async (e) => {
 
 
-        if (updatePaid < updateDate && updatePaid !== "") {
-            return alert('Data de pagemento não pode ser inferior a data de vencimento')
+        if (updateDtLaunch > updateDate && updateDtLaunch !== "") {
+            return alert('Data de pagamento não pode ser inferior a data de lançamento')
         }
 
         e.preventDefault()
@@ -139,7 +139,7 @@ const FormUpdate = ({ data }) => {
     }
 
     return (
-        <div className="update">
+        <div className="cardMain">
             <Link href={'../'}><button>Home</button></Link>
             <h1>Atualizar dados</h1>
             <div className="cardForm">

@@ -1,11 +1,14 @@
-.card{
+.card {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
-    
+    margin: auto;
+
 
 }
-.itens{
+
+.itens {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,7 +18,7 @@
     position: relative;
 }
 
-.value{
+.value {
     position: absolute;
     left: 160px;
     width: 100px;
@@ -23,28 +26,29 @@
     justify-content: flex-end;
 
 }
-.description{
+
+.description {
     max-width: 140px;
 }
 
-.date{
+.date {
     position: absolute;
     left: 390px;
 }
 
-.button{
+.button {
     position: absolute;
     left: 480px;
-    
+
 }
 
-.update{
+.update {
     text-decoration: none;
-    color:black
+    color: black
 }
 
 
-.title{
+.title {
     display: flex;
     justify-content: space-between;
     border: 1px solid black;
@@ -52,43 +56,43 @@
     padding: 5px;
 }
 
-.adicionar{
+.adicionar {
     display: flex;
     justify-items: flex-end;
     text-align: none;
+    text-decoration: none;
+    color: black;
 
 }
 
-.input{
+.input {
     display: block;
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 4px;
     width: 250px;
     position: relative;
 }
 
-.update{
+.cardMain {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
 }
 
-.buttonUpdate{
+.buttonUpdate {
     position: absolute;
-    left:150px;
+    left: 150px;
     top: 293px
-
 }
 
-.buttonRemover{
+.buttonRemover {
     position: absolute;
     top: 293px;
     left: 250px
-    
 }
 
-.cardForm{
+.cardForm {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -96,7 +100,7 @@
     width: 500px;
 }
 
-.form{
+.form {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -107,4 +111,31 @@
     position: absolute;
     top: 330px;
     left: 195px;
+}
+
+.period {
+    display: block;
+    margin: 5px;
+}
+
+.formPeriod {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 290px;
+}
+
+.buttonSearch {
+    position: absolute;
+    top: 22px;
+    left: 250px
+}
+
+.dtPeriod {
+    margin: 5px;
+}
+
+.titleForm{
+    margin-left:5px ;
 }
