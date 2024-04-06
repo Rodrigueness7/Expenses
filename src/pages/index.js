@@ -49,14 +49,50 @@ function Home(props) {
       newValue += parseFloat(updateData.value)
       setTotal(newValue)
     })
-
+    
     setNewUpdate(resData)
   }
+
+  const orderDes = () => {
+    let desc = []
+
+    props.newData.map((itens) => {
+      desc.push(itens)
+      desc.sort((a,b) => {
+        if(a.description < b.description) {
+          return - 1
+        } else {
+          return true
+        }
+      })
+      setNewUpdate(desc)
+    })
+  }
+
+  const orderValue = () => {
+   
+   let values = []
+
+  props.newData.map((itens) => {
+    values.push(itens)
+    values.sort((a,b) => {
+      if(a.value < b.value) {
+        return - 1
+      } else {
+        return true
+      }
+    })
+
+  })
+  
+   setNewUpdate(values)
+  }
+  
 
   return (
     <div className="card">
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
-      <h1>Despesas</h1>
+      <h1>Despesas mensais</h1>
       <form onSubmit={onsubmit} className="formPeriod">
        <label><span className="titleForm">Dt Inicial:</span>
        <input className="period" type="date" onChange={handleDateInit} value={dateInit}></input>
@@ -66,7 +102,7 @@ function Home(props) {
         </label>
         <button className="buttonSearch" type="submit">Buscar</button>
       </form>
-      <div className="title"><span>Conta</span><span>Valor</span><span>Vencimento</span></div>
+      <div className="title"><span onClick={orderDes}>Conta</span><span onClick={orderValue}>Valor</span><span>Vencimento</span></div>
       {newUpdate.map((itens) =>
         <div className="itens"
           key={itens.id}><span className="description"> {itens.description}</span>
