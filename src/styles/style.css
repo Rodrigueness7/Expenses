@@ -139,3 +139,7 @@
 .titleForm{
     margin-left:5px ;
 }
+
+.descriptName {
+    cursor: pointer;
+}

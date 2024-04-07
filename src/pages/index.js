@@ -49,7 +49,7 @@ function Home(props) {
       newValue += parseFloat(updateData.value)
       setTotal(newValue)
     })
-    
+
     setNewUpdate(resData)
   }
 
@@ -58,8 +58,8 @@ function Home(props) {
 
     props.newData.map((itens) => {
       desc.push(itens)
-      desc.sort((a,b) => {
-        if(a.description < b.description) {
+      desc.sort((a, b) => {
+        if (a.description < b.description) {
           return - 1
         } else {
           return true
@@ -70,39 +70,56 @@ function Home(props) {
   }
 
   const orderValue = () => {
-   
-   let values = []
 
-  props.newData.map((itens) => {
-    values.push(itens)
-    values.sort((a,b) => {
-      if(a.value < b.value) {
-        return - 1
-      } else {
-        return true
-      }
+    let values = []
+
+    props.newData.map((itens) => {
+      values.push(itens)
+      values.sort((a, b) => {
+        if (a.value < b.value) {
+          return - 1
+        } else {
+          return true
+        }
+      })
+
     })
 
-  })
-  
-   setNewUpdate(values)
+    setNewUpdate(values)
   }
-  
+
+  const orderDate = () => {
+    let dates = []
+
+    props.newData.map((itens) => {
+      dates.push(itens)
+      dates.sort((a, b) => {
+        if (a.dt_exp < b.dt_exp) {
+          return - 1
+        } else {
+          return true
+        }
+      })
+    })
+    setNewUpdate(dates)
+  }
 
   return (
     <div className="card">
       <Link className="adicionar" href={'/add'}><button>Adicionar</button></Link>
       <h1>Despesas mensais</h1>
       <form onSubmit={onsubmit} className="formPeriod">
-       <label><span className="titleForm">Dt Inicial:</span>
-       <input className="period" type="date" onChange={handleDateInit} value={dateInit}></input>
-       </label>
+        <label><span className="titleForm">Dt Inicial:</span>
+          <input className="period" type="date" onChange={handleDateInit} value={dateInit}></input>
+        </label>
         <label><span className="titleForm">Dt Final:</span>
-        <input className="period" type="date" onChange={handleDateFinish} value={dateFinish}></input>
+          <input className="period" type="date" onChange={handleDateFinish} value={dateFinish}></input>
         </label>
         <button className="buttonSearch" type="submit">Buscar</button>
       </form>
-      <div className="title"><span onClick={orderDes}>Conta</span><span onClick={orderValue}>Valor</span><span>Vencimento</span></div>
+      <div className="title"><span className="descriptName" onClick={orderDes}>Conta</span>
+        <span className="descriptName" onClick={orderValue}>Valor</span>
+        <span className="descriptName" onClick={orderDate}>Vencimento</span></div>
       {newUpdate.map((itens) =>
         <div className="itens"
           key={itens.id}><span className="description"> {itens.description}</span>
