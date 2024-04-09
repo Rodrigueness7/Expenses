@@ -90,12 +90,13 @@ const FormUpdate = ({ data }) => {
 
         const updateData = {
             id: routeId.query.id,
-            description: updateDescription,
+            description: updateDescription[0].toUpperCase() + updateDescription.substring(1),
             value: newUpdateValue,
             dt_exp: updateDate,
             dt_paid: payment(),
             dt_launch: updateDtLaunch
         }
+
 
         const res = await fetch(`http://localhost:3001/update/${routeId.query.id}`, {
             method: 'PUT',

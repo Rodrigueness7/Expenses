@@ -11,6 +11,7 @@ function Add() {
 
     const handleDescription = (e) => {
         setDescription(e.target.value)
+
     }
 
     const handleValue = (e) => {
@@ -30,6 +31,8 @@ function Add() {
 
     const handleDateLaunch = (e) => {
         setDateLaunch(e.target.value)
+
+       
     }
 
     async function onSubmit(event) {
@@ -47,13 +50,11 @@ function Add() {
 
 
         const data = {
-            description: description,
+            description: description[0].toUpperCase() + description.substring(1),
             value: newValue,
             dt_exp: date,
             dt_launch: date_launch
         }
-
-
 
         const response = await fetch('http://localhost:3001/add', {
             method: 'POST',
