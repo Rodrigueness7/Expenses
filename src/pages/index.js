@@ -26,6 +26,7 @@ function Home(props) {
   const [newTotal, setTotal] = useState(props.total)
   const [dateInit, setDateInit] = useState('')
   const [dateFinish, setDateFinish] = useState('')
+  const [click, setClick] = useState(0)
 
   const handleDateInit = (e) => {
     setDateInit(e.target.value)
@@ -56,52 +57,102 @@ function Home(props) {
   const orderDes = () => {
     let desc = []
 
-    props.newData.map((itens) => {
-      desc.push(itens)
-      desc.sort((a, b) => {
-        if (a.description < b.description) {
-          return - 1
-        } else {
-          return true
-        }
+    if (click === 0) {
+      props.newData.map((itens) => {
+        desc.push(itens)
+        desc.sort((a, b) => {
+          if (a.description < b.description) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(desc)
       })
-      setNewUpdate(desc)
-    })
+      setClick(click + 1)
+    } else {
+      props.newData.map((itens) => {
+        desc.push(itens)
+        desc.sort((a, b) => {
+          if (a.description > b.description) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(desc)
+      })
+      setClick(click * 0)
+
+    }
   }
 
   const orderValue = () => {
 
     let values = []
 
-    props.newData.map((itens) => {
-      values.push(itens)
-      values.sort((a, b) => {
-        if (a.value < b.value) {
-          return - 1
-        } else {
-          return true
-        }
+    if (click === 0) {
+      props.newData.map((itens) => {
+        values.push(itens)
+        values.sort((a, b) => {
+          if (a.value < b.value) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(values)
       })
+      setClick(click + 1)
+    } else {
+      props.newData.map((itens) => {
+        values.push(itens)
+        values.sort((a, b) => {
+          if (a.value > b.value) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(values)
+      })
+      setClick(click * 0)
 
-    })
-
-    setNewUpdate(values)
+    }
   }
 
   const orderDate = () => {
     let dates = []
 
-    props.newData.map((itens) => {
-      dates.push(itens)
-      dates.sort((a, b) => {
-        if (a.dt_exp < b.dt_exp) {
-          return - 1
-        } else {
-          return true
-        }
+    if (click === 0) {
+      props.newData.map((itens) => {
+        dates.push(itens)
+        dates.sort((a, b) => {
+          if (a.dt_exp < b.dt_exp) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(dates)
       })
-    })
-    setNewUpdate(dates)
+      setClick(click + 1)
+    } else {
+      props.newData.map((itens) => {
+        dates.push(itens)
+        dates.sort((a, b) => {
+          if (a.dt_exp > b.dt_exp) {
+            return - 1
+          } else {
+            return true
+          }
+        })
+        setNewUpdate(dates)
+      })
+      setClick(click * 0)
+    }
+
+
   }
 
   return (
